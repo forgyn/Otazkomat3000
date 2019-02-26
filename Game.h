@@ -4,12 +4,12 @@
 #include <ctime>
 class MainSystem;
 using namespace std;
-#define LOOP(n) for(int i = 0;i<n;i++)
+#define LOOP(n) for(unsigned i = 0;i<n;i++)
 #define NUM_OF_PROFILES 20
 #define SIZE_OF_NAME 30
 #define SIZE_OF_PASSWORD 100
 #define PROFILE_FILE_PATH "Data/Profiles.dat"
-#define PAUSE _getwch()
+#define PAUSE _getch()
 #define VYBRANA_OTAZKA MS->okruhy[vybrany_okruh].otazky[vybrana_otazka]
 #define VYBRANY_OKRUH MS->okruhy[vybrany_okruh]
 #define SELECTED_PROFILE profily[selected_profile]
@@ -23,7 +23,7 @@ struct Player {
 		pocet_odpovezenych_otazek = 0;
 		INIT = false;
 	}
-	
+
 	Player(char N[SIZE_OF_NAME],char PSW[SIZE_OF_PASSWORD], unsigned short AGE) {
 		LOOP(SIZE_OF_NAME) { name[i] = N[i]; }
 		LOOP(SIZE_OF_PASSWORD) password[i] = PSW[i];
@@ -63,7 +63,7 @@ struct Player {
 	short celkove_mnozstvi_bodu;
 	short pocet_odpovezenych_otazek;
 	short pocet_hotovych_okruhu;
-	bool passwordCheck(char temp_psw[SIZE_OF_PASSWORD]) { 
+	bool passwordCheck(char temp_psw[SIZE_OF_PASSWORD]) {
 		//zjištìní velikosti puvodniho hesla
 		uint16_t velikost_password = 0;
 		while (password[velikost_password++] != '\0');
@@ -80,7 +80,7 @@ private:
 	char password[SIZE_OF_PASSWORD];
 };
 
-static default_random_engine randomGenerator(time(NULL));
+static std::default_random_engine randomGenerator(time(NULL));
 
 class Game
 {

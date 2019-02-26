@@ -1,8 +1,8 @@
 #pragma once
 
-#define LOOP(n) for(int i = 0;i<n;i++)
-#define PAUSE _getwch()
-#define READ(text) for(int i=0;text[i]!='\0',i++) 
+#define LOOP(n) for(unsigned i = 0;i<n;i++)
+#define PAUSE _getch()
+#define READ(text) for(int i=0;text[i]!='\0',i++)
 #define SIZE_OF_QUASTION 200
 #define SIZE_OF_DESCRIPTION 100
 #define SIZE_OF_ANSWER 100
@@ -18,9 +18,9 @@
 #include "String.h"
 #include "DynamicArray.h"
 #include <fstream>
-#include <string>
 #include "Game.h"
-typedef DynamicArray<String> Quast;
+using namespace fl;using namespace std;
+typedef DynamicArray<fl::String> Quast;
 
 
 
@@ -139,7 +139,7 @@ public:
 
 			}
 		}
-		
+
 		return stream;
 	}
 	void pridatOtazku(Otazka OTAZKA) {
@@ -165,9 +165,9 @@ class MainSystem
 public:
 	MainSystem();
 	~MainSystem();
-	static uint16_t answerSelect(String quastion, Quast &choices, bool showNum = false);
-	static bool answerBool(String quastion);
-	static uint16_t answerNum(String quastion, uint16_t min, uint16_t max, uint16_t krok);
+	static uint16_t answerSelect(fl::String quastion, Quast &choices, bool showNum = false);
+	static bool answerBool(fl::String quastion);
+	static uint16_t answerNum(fl::String quastion, uint16_t min, uint16_t max, uint16_t krok);
 	bool pridat_okruh(Okruh okruh);
 	bool mainMenu();
 	Okruh *okruhy = new Okruh[NUM_OF_CHAPTERS];

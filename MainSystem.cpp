@@ -6,6 +6,12 @@
 void MainSystem::game(){}
 
 bool MainSystem::initSystem(){
+    //inicializuje soubory
+    ofstream create;
+    create.open(CHAPTER_FILE_PATH,std::ofstream::binary);
+    create.close();
+    create.open(PROFILE_FILE_PATH,std::ofstream::binary);
+    create.close();
 	loadChapters();
 	return true;
 }
@@ -40,7 +46,7 @@ bool MainSystem::answerBool(String quastion) {
 		cout << "NE" << endl;
 
 		//èekání na vstup uživatele x pro vyber, w pro posun nahoru, s pro posun dolu
-		char move = _getwch();
+		char move = _getch();
 
 		//vyber moznosti podle zmacknute klavesy
 		switch (move) {
@@ -73,7 +79,7 @@ uint16_t MainSystem::answerSelect(String quastion, Quast &choices, bool showNum)
 			cout << choices[i] << endl;
 		}
 		//èekání na vstup uživatele x pro vyber, w pro posun nahoru, s pro posun dolu
-		char move = _getwch();
+		char move = _getch();
 		//vyber moznosti podle zmacknute klavesy
 		switch (move) {
 		case 's':
@@ -100,7 +106,7 @@ uint16_t MainSystem::answerNum(String quastion, uint16_t min, uint16_t max, uint
 		//zobrazí vybrane mnozstvi
 		cout <<"-- ["<< selectedAnswer<<"] ++" << endl;
 		//èekání na vstup uživatele x pro vyber, w pro posun nahoru, s pro posun dolu
-		char move = _getwch();
+		char move = _getch();
 		//vyber moznosti podle zmacknute klavesy
 		switch (move) {
 		case 'a':
@@ -148,8 +154,14 @@ bool MainSystem::mainMenu(){
 }
 
 void MainSystem::saveChapters(){
-	ofstream save(CHAPTER_FILE_PATH,std::ofstream::binary);
+	ofstream save;
+	save.open(CHAPTER_FILE_PATH,std::ofstream::binary);
+	if(!save.fail()){
 	save.write((char*)(okruhy), sizeof(Okruh)*NUM_OF_CHAPTERS);
+	}else{
+	cout << "Error: chybi soubor - "<< CHAPTER_FILE_PATH << endl;
+	PAUSE;
+	}
 	save.close();
 }
 
@@ -165,8 +177,12 @@ void MainSystem::showDebugInfo(){
 void MainSystem::loadChapters(){
 	pocet_okruhu = 0;
 	ifstream load(CHAPTER_FILE_PATH, std::ifstream::binary| std::ifstream::in);
+	if(!load.fail()){
 	load.read((char*)(okruhy), sizeof(Okruh)*NUM_OF_CHAPTERS);
-
+	}else{
+		cout << "Error: chybi soubor - "<< CHAPTER_FILE_PATH << endl;
+	PAUSE;
+	}
 	load.close();
 	//zjisti poèet naètených otázek
 	LOOP(NUM_OF_CHAPTERS)if (okruhy[i].isLoaded)pocet_okruhu++;
@@ -182,6 +198,7 @@ void MainSystem::debug(){
 		loadChapters();
 		break;
 	case 1:
+	    //zobrazi velikosti nekterych objektu
 		showDebugInfo();
 		break;
 	}

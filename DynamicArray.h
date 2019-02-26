@@ -4,14 +4,15 @@
 #define LOOP(n) for(int i = 0;i<n;i++)
 #define RLOOP(n) for(int i = n-1;i>=0;i--)
 #define SLOOP(n1,n2) for(int i = n1;i<n2;i++)
-#define INPUT int input = _getwch() 
+#define INPUT int input = _getch()
+namespace fl{
 template<class T>struct DynamicArray {
 	 DynamicArray() {
 		maxVelikost = 0;
 		poleUkazatelu = new T*[1];
 	};
 	 DynamicArray(DynamicArray &copy) {
-		 if (copy.max_size() != 0) { 
+		 if (copy.max_size() != 0) {
 			 maxVelikost = copy.max_size();
 			 poleUkazatelu = new T*[copy.max_size()];
 			 LOOP(copy.max_size()) poleUkazatelu[i] = new T(copy[i]); }
@@ -34,7 +35,7 @@ template<class T>struct DynamicArray {
 	int size() const {return velikost;}
 	int max_size() {return maxVelikost;}
 	T give_back(const int &n) {if (n < velikost && n>=0)return *poleUkazatelu[n];}
-	T& operator[] (const int &n) const 
+	T& operator[] (const int &n) const
 	{
 		if (n < velikost && n >= 0) { return *poleUkazatelu[n]; }
 		else ERROR("ERROR: Spatne zadany parametr n!")
@@ -114,7 +115,7 @@ template<class T>struct DynamicArray {
 		}
 		else {
 			if (start >= end) {
-				//if (maxVelikost != 0)LOOP(maxVelikost)delete poleUkazatelu[i];		
+				//if (maxVelikost != 0)LOOP(maxVelikost)delete poleUkazatelu[i];
 				T * *temp_pole_ukazatelu = new T*[velikost - (end - start)];
 				//pøesune prvky od 0 do start
 				LOOP(start)temp_pole_ukazatelu[i] = new T(*poleUkazatelu[i]);
@@ -122,7 +123,7 @@ template<class T>struct DynamicArray {
 				SLOOP(end,velikost)temp_pole_ukazatelu[i] = new T(*poleUkazatelu[i]);
 				//smaže bývalé pole
 				LOOP(velikost) delete poleUkazatelu[i];
-				delete[] poleUkazatelu;	
+				delete[] poleUkazatelu;
 				//zmìní velikost
 				velikost = velikost - (end - start);
 				//vytvoøí nové pole
@@ -142,3 +143,4 @@ private:
 	int velikost = 0, maxVelikost;
 };
 
+}

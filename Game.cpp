@@ -46,8 +46,13 @@ Game::~Game(){
 void Game:: loadProfiles(){
 	pocet_profilu = 0;
 	ifstream load(PROFILE_FILE_PATH, std::ifstream::binary | std::ifstream::in);
+	if(!load.fail()){
 	load.read((char*)(profily), sizeof(Player)*NUM_OF_PROFILES);
 	load.close();
+	}else{
+	cout << "Error: chybi soubor - "<< PROFILE_FILE_PATH << endl;
+	PAUSE;
+	}
 	//zjisti poèet naètených otázek
 	LOOP(NUM_OF_PROFILES)if (profily[i].INIT)pocet_profilu++;
 }
@@ -55,7 +60,13 @@ void Game:: loadProfiles(){
 void Game::saveProfiles(){
 
 	ofstream save(PROFILE_FILE_PATH, std::ofstream::binary);
+	if (!save.fail()){
 	save.write((char*)(profily), sizeof(Player)*NUM_OF_PROFILES);
+	}else{
+	cout << "Error: chybi soubor - "<< PROFILE_FILE_PATH << endl;
+	PAUSE;
+	}
+
 	save.close();
 }
 
@@ -195,15 +206,15 @@ bool Game::mainMenu(unsigned short selected_profile){
 	case 3:
 		return false;
 	}
-	
+
 	return true;
 }
 
 
 
 void Game::playChapter(unsigned short vybrany_okruh, unsigned short selected_profile){
-	uniform_int_distribution<unsigned short> randomNumber(5, 10);
-	uniform_int_distribution<unsigned short> randomNumber2(0, VYBRANY_OKRUH.pocet_otazek_okruhu-1);
+	std::uniform_int_distribution<unsigned short> randomNumber(5, 10);
+	std::uniform_int_distribution<unsigned short> randomNumber2(0, VYBRANY_OKRUH.pocet_otazek_okruhu-1);
 	uint16_t num_of_quastions = randomNumber(randomGenerator);
 	if (num_of_quastions > VYBRANY_OKRUH.pocet_otazek_okruhu)num_of_quastions = VYBRANY_OKRUH.pocet_otazek_okruhu;
 
@@ -217,13 +228,13 @@ void Game::playChapter(unsigned short vybrany_okruh, unsigned short selected_pro
 		while (true) {
 			incorrect = false;
 			temp_num = randomNumber2(randomGenerator);
-			for (int y = 0; y < num_of_quastions; y++) { 
-				if (arreyOfQuastions[y] == temp_num)incorrect = true; 
+			for (int y = 0; y < num_of_quastions; y++) {
+				if (arreyOfQuastions[y] == temp_num)incorrect = true;
 			}
 			if (!incorrect) {
 				arreyOfQuastions[i] = temp_num;
 				break;
-			}		
+			}
 		}
 	}
 	//loop otazek

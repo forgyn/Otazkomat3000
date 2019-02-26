@@ -43,12 +43,12 @@ bool Editor::novyOkruh(){
 	char *temp_popis = new char[SIZE_OF_DESCRIPTION];
 
 	//výbìr názvu okruhu
-	system("cls");
+	CLS;
 	cout << "Prosim vyberte nazev okruhu(max. " << SIZE_OF_NAME << " znaku): ";
 	cin.getline(temp_name, SIZE_OF_NAME);
-	
+
 	//Nastaveni popisu okruhu
-	system("cls");
+	CLS;
 	cout << "Prosim napis popis okruhu(max. " << SIZE_OF_DESCRIPTION << " znaku): ";
 	cin.getline(temp_popis, SIZE_OF_DESCRIPTION);
 
@@ -61,7 +61,8 @@ bool Editor::novyOkruh(){
 	//Iniciace okruhu a jeji ulozeni
 	Okruh okruh(obtiznost, temp_name,temp_popis);
 	MS->pridat_okruh(okruh);
-	delete[] temp_name,temp_popis;
+	delete[] temp_name;
+	delete[] temp_popis;
 
 	return false;
 }
@@ -74,8 +75,8 @@ bool Editor::novaOtazka(){
 	}
 
 	//výbìr okruhu do kterého chce uživatel pøidat otázku
-	DynamicArray<String> nazvy_okruhu;
-	LOOP(MS->pocet_okruhu)nazvy_okruhu((MS->okruhy[i].nazev));
+	DynamicArray<fl::String> nazvy_okruhu;
+	LOOP(MS->pocet_okruhu)nazvy_okruhu(MS->okruhy[i].nazev);
 	nazvy_okruhu("Zpet");
 	uint16_t vybrany_okruh = MainSystem::answerSelect("Vyber okruh ke kteremu chces pridat otazku: ", nazvy_okruhu,1);
 	if (vybrany_okruh == nazvy_okruhu.size() - 1)return false;
@@ -144,24 +145,24 @@ bool Editor::editChapter(){
 
 	//vyber co chceš editovat
 	DynamicArray<String> moznosti_editovani;
-	moznosti_editovani("Nazev"); 
+	moznosti_editovani("Nazev");
 	moznosti_editovani("Popis");
-	moznosti_editovani("Obtiznost"); 
-	moznosti_editovani("Otazky"); 
+	moznosti_editovani("Obtiznost");
+	moznosti_editovani("Otazky");
 	moznosti_editovani("!Smazat okruh!");
 	moznosti_editovani("Zpet");
 	while (true) {
 		uint16_t selected_answer = MainSystem::answerSelect("Vyber co chces na okruhu editovat: ", moznosti_editovani);
 		if (selected_answer == 0) {
 			//výbìr nového názvu okruhu
-			system("cls");
+			CLS;
 			cout << "Puvodni nazev okruhu: " << VYBRANY_OKRUH.nazev << endl;
 			cout << "Prosim vyberte nazev okruhu(max. " << SIZE_OF_NAME << " znaku): ";
 			char temp_name[SIZE_OF_NAME];
 			cin.getline(temp_name, SIZE_OF_NAME);
 			//zmeneni nazvu
 			MS->okruhy[vybrany_okruh].setName(temp_name);
-			//uložení 
+			//uložení
 			MS->saveChapters();
 			//informace o operaci
 			cout << "Nazev uspesne zmenen!" << endl;
@@ -169,14 +170,14 @@ bool Editor::editChapter(){
 		}
 		if (selected_answer == 1) {
 			//výbìr nového popisu okruhu
-			system("cls");
+			CLS;
 			cout << "Puvodni popis okruhu: " << VYBRANY_OKRUH.popis << endl;
 			cout << "Prosim vyberte popis okruhu(max. " << SIZE_OF_DESCRIPTION << " znaku): ";
 			char temp_popis[SIZE_OF_DESCRIPTION];
 			cin.getline(temp_popis, SIZE_OF_DESCRIPTION);
 			//zmeneni popisu
 			MS->okruhy[vybrany_okruh].setDescription(temp_popis);
-			//uložení 
+			//uložení
 			MS->saveChapters();
 			//informace o operaci
 			cout << "Popis uspesne zmenen!" << endl;
@@ -184,14 +185,14 @@ bool Editor::editChapter(){
 		}
 		if (selected_answer == 2) {
 			//výbìr nové obtížnosti
-			system("cls");
+			CLS;
 			Quast moznosti2;
 			moznosti2("Primitivni obtiznost"); moznosti2("Lehka obtiznost"); moznosti2("Stredni obtiznost");
 			moznosti2("Tezka obtiznost"); moznosti2("Velmi tezka obtiznost"); moznosti2("Extremni obtiznost");
 			uint16_t obtiznost = MainSystem::answerSelect("Vyberte novou obtiznost okruhu", moznosti2);
 			//nastaveni nové obtížnosti
 			MS->okruhy[vybrany_okruh].obtiznost = obtiznost;
-			//uložení 
+			//uložení
 			MS->saveChapters();
 			//informace o operaci
 			cout << "Popis uspesne zmenen!" << endl;
@@ -236,10 +237,10 @@ bool Editor::editQuastions(unsigned short vybrany_okruh){
 	//výbìr toho co chceš upravit
 	//vyber co chceš editovat
 	DynamicArray<String> moznosti_editovani;
-	moznosti_editovani("Text otazky"); 
-	moznosti_editovani("Body za otazku"); 
-	moznosti_editovani("Zmenit odpoved"); 
-	moznosti_editovani("!Smazat odpoved!"); 
+	moznosti_editovani("Text otazky");
+	moznosti_editovani("Body za otazku");
+	moznosti_editovani("Zmenit odpoved");
+	moznosti_editovani("!Smazat odpoved!");
 	moznosti_editovani("Zmenit spravnou odpoved");
 	moznosti_editovani("Pridat novou odpoved");
 	moznosti_editovani("!Smazat otazku!");
@@ -248,7 +249,7 @@ bool Editor::editQuastions(unsigned short vybrany_okruh){
 		uint16_t ans = MainSystem::answerSelect("Vyber co si prejec upravit: ", moznosti_editovani);
 		if (ans == 0) {
 			//zadani nove otazky
-			system("cls");
+			CLS;
 			cout << "Puvodni otazka: " << VYBRANA_OTAZKA.text_otazky << endl;
 			cout << "Zadejte novou otazku : ";
 			char temp_text[SIZE_OF_DESCRIPTION];
@@ -282,7 +283,7 @@ bool Editor::editQuastions(unsigned short vybrany_okruh){
 			if (vybrana_odpoved != odpovedi.size() - 1) {
 
 			//zadani noveho textu odpovedi
-			system("cls");
+			CLS;
 			cout << "Zadani otazky  : " << VYBRANA_OTAZKA.text_otazky << endl;
 			cout << "Puvodni odpoved: " << VYBRANA_OTAZKA.odpovedi[vybrana_odpoved] << endl;
 			cout << "Napiste novou odpoved (max. " << SIZE_OF_ANSWER << " znaku)" << endl << ">>";
@@ -294,7 +295,7 @@ bool Editor::editQuastions(unsigned short vybrany_okruh){
 		}
 		if (ans == 3) {
 			//výbìr otazky kterou chce uživatel upravit
-			DynamicArray<String> odpovedi;
+			DynamicArray<fl::String> odpovedi;
 			LOOP(VYBRANA_OTAZKA.mnozsti_odpovedi)odpovedi((VYBRANA_OTAZKA.odpovedi[i]));
 			odpovedi("Zpet");
 			uint16_t vybrana_odpoved = MainSystem::answerSelect("Vyber odpoved kterou chcete smazat: ", odpovedi, 1);
@@ -326,7 +327,7 @@ bool Editor::editQuastions(unsigned short vybrany_okruh){
 		if (ans == 5) {
 			//zajistí aby bylo množství odpovìdí menší než povolené maximum
 			if (VYBRANA_OTAZKA.mnozsti_odpovedi < NUM_OF_ANSWERS) {
-				system("cls");
+				CLS;
 				cout << "Odpovedi        : " << VYBRANA_OTAZKA.mnozsti_odpovedi << "/" << NUM_OF_ANSWERS << endl;
 				cout << "Zadani otazky   : " << VYBRANA_OTAZKA.text_otazky << endl;
 				cout << "Napiste odpoved : " << endl << ">>";

@@ -1,8 +1,8 @@
-#define VERSION 1.00
+#define VERSION 1.10
 #define PAUSE _getwch()
 #define START_OF_PROJECT "27.01.2019"
 #define LAST_UPDATE		 "20.02.2019"
-#define END_OF_PROJECT   "20.02.2019"
+#define END_OF_PROJECT   "26.02.2019"
 #define LOOP(n) for(int i = 0;i<n;i++)
 
 #include "String.h"
@@ -27,6 +27,6 @@ int main() {
 	MainSystem mainSystem;
 	///zobrazí hlavní menu, hlavní smyèka
 	while(mainSystem.mainMenu());
-	
+
 	return 0;
 }

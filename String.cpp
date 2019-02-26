@@ -1,5 +1,6 @@
 #include "String.h"
 #include "String.h"
+using namespace fl;
 
 void String::operator=(const char *text) {
  if (velikost > 0)clear();
@@ -110,7 +111,7 @@ void String::delEdgWts(){
 		}
 		else break;
 	}
-		
+
 }
 void String::add(const char &c){
 	char *temp_text = new char[velikost];
@@ -130,10 +131,10 @@ char*String::getPart(unsigned start, unsigned end)const{
 		part[y] = '\0';
 		return part;
 	}
-	else { 
-		
-		ERROR("ERROR"); 
-	
+	else {
+
+		ERROR("ERROR");
+
 	}
 }
 void String::operator=(String &text2) {
@@ -283,7 +284,7 @@ bool String::remove(const char &c, remove_enum_delete_order DELETE, remove_use_r
 				if (_text[i] == c) {
 					_text[i] = ' ';
 					return true;
-				}	
+				}
 			}
 			return false;
 			break;
@@ -292,7 +293,7 @@ bool String::remove(const char &c, remove_enum_delete_order DELETE, remove_use_r
 				if (_text[i] == c) {
 					del(i);
 					return true;
-				}	
+				}
 			}
 			return false;
 			break;
@@ -343,16 +344,6 @@ bool String::remove(const char &c, remove_enum_delete_order DELETE, remove_use_r
 	}
 }
 
-/*String& String::operator[](unsigned n) {
-	if (n >= 0 && n<velikost) {
-		_selectedNumber = n;
-		return *this;
-	}
-	else {
-		_selectedNumber = -2;
-		return *this;
-	}
-}*/
 void String::operator=(const char &znak) {
 	if (_selectedNumber >= 0) {
 		_text[_selectedNumber] = znak;
@@ -388,10 +379,7 @@ unsigned String::count(const char &c)const{
 	return NUM;
 }
 
-ostream & operator<<(ostream & str, const String & text){
-	str << text.get();
-	return str;
-}
+
 
 bool String::checkNumber() {
 	//zkontroluje zda nema cislo vic nez 1 tecky
